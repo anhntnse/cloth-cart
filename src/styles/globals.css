@@ -1,0 +1,7 @@
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+select:hover option {
+  background-color: #e5e7eb; /* Màu xám */
+}
