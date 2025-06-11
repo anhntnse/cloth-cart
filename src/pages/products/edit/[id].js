@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import ProductForm from '@/components/ProductForm';
+import { toast } from 'react-toastify';
+import { requireAuth } from "@/lib/auth/requireAuth";
 
 export default function EditProduct() {
   const router = useRouter();
@@ -31,7 +33,7 @@ export default function EditProduct() {
 
         setPreviewUrl(data.image || null);
       } catch (error) {
-        alert(error.message);
+        toast.error(error.message);
       } finally {
         setLoadingData(false);
       }
@@ -70,7 +72,7 @@ export default function EditProduct() {
 
         const json = await res.json();
         if (!res.ok) {
-          alert('Upload ảnh thất bại');
+          toast.error('Upload failed');
           setLoading(false);
           return;
         }
@@ -89,13 +91,14 @@ export default function EditProduct() {
       });
 
       if (res.ok) {
+        toast.success('Updated successfully!');
         router.push('/');
       } else {
         const err = await res.json();
-        alert(err.error || 'Có lỗi xảy ra khi cập nhật');
+        toast.error(err.error || 'Có lỗi xảy ra khi cập nhật');
       }
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     } finally {
       setLoading(false);
     }
@@ -119,4 +122,8 @@ export default function EditProduct() {
       loading={loading}
     />
   );
+}
+
+export async function getServerSideProps(context) {
+  return requireAuth(context);
 }

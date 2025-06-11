@@ -5,3 +5,24 @@
 select:hover option {
   background-color: #e5e7eb; /* Màu xám */
 }
+.neutral-toast {
+  background: #2e2e2e !important;            /* xám đậm trung tính */
+  color: #f5f5f5 !important;                 /* trắng nhẹ */
+  border-radius: 10px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* đổ bóng tinh tế */
+  border: 1px solid #3e3e3e;
+  font-weight: 500;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+}
+
+.neutral-toast-body {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-size: 15px;
+  margin-left: 6px;
+}
+
+.Toastify__progress-bar {
+  background: #ffffff !important;  /* progress bar trắng */
+}

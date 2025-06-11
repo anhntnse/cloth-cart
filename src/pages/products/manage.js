@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { requireAuth } from "@/lib/auth/requireAuth";
 
 
 export default function ProductManagement() {
@@ -92,4 +93,7 @@ export default function ProductManagement() {
       )}
     </div>
   );
+}
+export async function getServerSideProps(context) {
+  return requireAuth(context);
 }

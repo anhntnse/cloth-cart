@@ -65,7 +65,6 @@ export default function Home() {
           loop
           muted
           playsInline
-          poster="/images/banner-poster.jpg"
           className="w-full max-h-[500px] object-cover"
         />
         <div className="absolute bottom-4 left-4 bg-black/10 px-4 py-2 rounded-md">

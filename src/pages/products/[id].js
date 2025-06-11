@@ -1,11 +1,14 @@
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from 'next/link';
+import Link from "next/link";
+import { toast } from "react-toastify";
 
 export default function ProductDetail() {
   const router = useRouter();
   const { query, isReady } = router;
+  const { data: session, status } = useSession();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -33,6 +36,7 @@ export default function ProductDetail() {
 
   const handleDelete = async () => {
     await fetch(`/api/products/${query.id}`, { method: "DELETE" });
+    toast.success("Deleted successfully!");
     router.push("/");
   };
 
@@ -117,20 +121,22 @@ export default function ProductDetail() {
           </div>
         </div>
 
-        <div className="flex mt-8 space-x-4 max-w-md">
-          <Link
-            href={`/products/edit/${product._id}`}
-            className="flex-1 py-3 text-center font-semibold bg-black text-white hover:bg-gray-800 transition"
-          >
-            Edit
-          </Link>
-          <button
-            onClick={handleDelete}
-            className="flex-1 py-3 text-center font-semibold border border-black text-black bg-white hover:bg-gray-100 transition"
-          >
-            Delete
-          </button>
-        </div>
+        {status === "authenticated" && (
+          <div className="flex mt-8 space-x-4 max-w-md">
+            <Link
+              href={`/products/edit/${product._id}`}
+              className="flex-1 py-3 text-center font-semibold bg-black text-white hover:bg-gray-800 transition"
+            >
+              Edit
+            </Link>
+            <button
+              onClick={handleDelete}
+              className="flex-1 py-3 text-center font-semibold border border-black text-black bg-white hover:bg-gray-100 transition"
+            >
+              Delete
+            </button>
+          </div>
+        )}
       </section>
     </main>
   );
