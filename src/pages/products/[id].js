@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 export default function ProductDetail() {
   const router = useRouter();
   const { query, isReady } = router;
-  const { data: session, status } = useSession();
+  const { data: status } = useSession();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
