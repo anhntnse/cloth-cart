@@ -1,18 +1,23 @@
+"use client";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
+import { toast } from "react-toastify";
+import { useCartHelper } from "../helpers/useCartHelper";
 
-interface Product {
-  _id: string;
-  name: string;
-  price: number;
-  image?: string;
-}
+export default function ProductCard({ product }) {
+  const { data: session } = useSession();
+  const { addToCart } = useCartHelper();
 
-interface ProductCardProps {
-  product: Product;
-}
+  const handleAddToCart = async () => {
+    if (!session) {
+      toast.info("Please login to add items to your cart.");
+      return;
+    }
 
-export default function ProductCard({ product }: ProductCardProps) {
+    addToCart(product._id, 1);
+  };
+
   return (
     <div className="group relative overflow-hidden shadow hover:shadow-lg transition bg-white mb-10">
       <Link href={`/products/${product._id}`}>
@@ -23,7 +28,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               alt={product.name}
               width={300}
               height={400}
-              className="w-full h-[450px] object-fit"
+              className="w-full h-[450px] object-cover"
             />
           )}
 
@@ -44,16 +49,23 @@ export default function ProductCard({ product }: ProductCardProps) {
             </svg>
           </div>
         </div>
-
-        <div className="p-2">
-          <h2 className="text-xs font-medium text-center mb-0.5 line-clamp-2">
-            {product.name}
-          </h2>
-          <p className="text-red-500 text-sm text-center font-semibold mb-0.5">
-            {product.price.toLocaleString("vi-VN")} VND
-          </p>
-        </div>
       </Link>
+
+      <div className="p-2">
+        <h2 className="text-xs font-medium text-center mb-0.5 line-clamp-2">
+          {product.name}
+        </h2>
+        <p className="text-red-500 text-sm text-center font-semibold mb-1">
+          {product.price.toLocaleString("vi-VN")} VND
+        </p>
+
+        <button
+          onClick={handleAddToCart}
+          className="block w-full text-center text-sm bg-black text-white py-1.5 rounded hover:bg-gray-800 transition cursor-pointer disabled:cursor-not-allowed"
+        >
+          Add to cart
+        </button>
+      </div>
     </div>
   );
 }
