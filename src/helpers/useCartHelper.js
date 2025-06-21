@@ -24,6 +24,7 @@ export function useCartHelper() {
       fetchCartCount();
     } catch (err) {
       toast.error("Error adding to cart.");
+      console.error(err);
     }
   };
 
@@ -45,6 +46,7 @@ export function useCartHelper() {
       if (onSuccess) onSuccess();
     } catch (err) {
       toast.error("Error removing product.");
+      console.error(err);
     }
   };
 

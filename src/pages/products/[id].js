@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { toast } from "react-toastify";
 import { FiPlus, FiMinus } from "react-icons/fi";
 import { useCartHelper } from "../../helpers/useCartHelper";
@@ -11,7 +10,7 @@ import Loading from "@/components/Loading";
 export default function ProductDetail() {
   const router = useRouter();
   const { query, isReady } = router;
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
@@ -73,11 +72,11 @@ export default function ProductDetail() {
     setQuantity(1);
   };
 
-  const handleDelete = async () => {
-    await fetch(`/api/products/${query.id}`, { method: "DELETE" });
-    toast.success("Deleted successfully!");
-    router.push("/");
-  };
+  // const handleDelete = async () => {
+  //   await fetch(`/api/products/${query.id}`, { method: "DELETE" });
+  //   toast.success("Deleted successfully!");
+  //   router.push("/");
+  // };
 
   if (loading) return <Loading />;
   if (error)
